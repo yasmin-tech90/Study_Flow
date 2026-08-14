@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>coding tracker</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+    <h1>Coding_problems Tracker</h1>
+
+    <button id="btn2" type="button">+ Add Problem</button>
+
+    <form id="coding" style="display: none;">
+
+        <label for="probname"> Problem Name :</label>
+        <input type="text" id="probname" name="probname" placeholder="arrange the array ascending" required><br><br>
+
+        <label for="platform">Platform :</label>
+        <input type="text" id="platform" name="platform" placeholder="LeetCode / HackerRank / Codeforces / Other"
+            required><br><br>
+
+        <label for="lang">The Language :</label>
+        <input type="text" id="lang" name="lang" placeholder="c++ / c# / java / other" required><br><br>
+
+        <label for="datesolved">Date solved :</label>
+        <input type="date" id="datesolved" name="datesolved" required><br><br>
+
+        <Label for="diff">Difficulty:</label>
+        <input type="radio" id="easy" name="diff" value="easy" required>
+        <label for="easy">Easy</label>
+        <input type="radio" id="medium" name="diff" value="medium" required>
+        <label for="medium">Medium</label>
+        <input type="radio" id="hard" name="diff" value="hard" required>
+        <label for="hard">Hard</label><br><br>
+
+        <button type="submit">save Problem</button>
+    </form>
+    <!--======================Display Problems=============================-->
+
+    <h2>Your Solved Problems</h2>
+
+    <div id="problemsList"></div>
+
+    <!--======================search=============================-->
+    <h2>Search</h2>
+
+    <input type="text" id="searchInput" placeholder="Search for a problem...">
+    <!--=================display the number of solved problems===========================-->
+
+    <h2>Solved Problems: <span id="solvedCount"></span></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="../scripts/coding_practice.js"></script> <!--  كان فيه ايرور فى الكونسول ودا الحل -->
+</body>
+
+</html>
