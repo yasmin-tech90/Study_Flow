@@ -1,23 +1,14 @@
-
-
 const subjects = JSON.parse(localStorage.getItem("subjects")) || [];// Get saved subjects from localStorage
 
-// Get today's LOCAL date
-// ==============================
-
-function getLocalDate() {
+function getLocalDate() { // Get today's LOCAL date
 
     const today = new Date();
 
     const year = today.getFullYear();
 
-    const month = String(
-        today.getMonth() + 1
-    ).padStart(2, "0");
+    const month = String(today.getMonth() + 1).padStart(2, "0");
 
-    const day = String(
-        today.getDate()
-    ).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
 
     return `${year}-${month}-${day}`;
 }
@@ -32,64 +23,65 @@ let hasReviewsToday = false; // No reviews found yet
 
 subjects.forEach(function (subject) {// Go through every subject
 
-    subject.reviews.forEach(function (review, index) {     // Go through every review inside this subject
 
+    subject.reviews.forEach(function (review, index) {    // Go through every review inside this subject
 
-        if (review.date === today) //if (review.date === today && review.completed === false)هستخدم دى لو عايزه الحاجه اللى اعلم عليها تختفى
-        {
-            hasReviewsToday = true; // No reviews found yet
+        if (review.date === today) {
 
+            hasReviewsToday = true;
 
-            const reviewItem = document.createElement("div"); // Create a container
+            todayreviewslist.innerHTML += `
+            
+                <div class="reviewitem">
 
-            const subjectName = document.createElement("h2"); // Create subject name
-            subjectName.textContent = subject.subjectname;
+                    <h2>${subject.subjectname}</h2>
 
+                    <p>Review #${index + 1}</p>
 
-            const reviewNumber = document.createElement("p"); // Create review number
-            reviewNumber.textContent = `Review #${index + 1}`;
+                    <button class="completebutton">
+                        ${review.completed ? "Reviewed ✓" : "Mark as Reviewed"}
+                    </button>
 
-
-            const completeButton = document.createElement("button"); // Create Mark as Reviewed button
-            completeButton.textContent = "Mark as Reviewed";
-
-            // Check if this review was already completed
-            if (review.completed === true) {
-                completeButton.textContent = "Reviewed ✓";
-                completeButton.disabled = true;
-            }
-
-            // Add everything to the review container
-            reviewItem.appendChild(subjectName);
-
-            reviewItem.appendChild(reviewNumber);
-
-            reviewItem.appendChild(completeButton);
-
-            // Display the review
-            todayreviewslist.appendChild(reviewItem);
-
-            // When user clicks the button
-            completeButton.addEventListener("click", function () {
-                // Mark this review as completed
-                review.completed = true;
-                // Save the updated subjects array
-                localStorage.setItem("subjects", JSON.stringify(subjects));
-                // Update button
-                completeButton.textContent = "Reviewed ✓";
-                completeButton.disabled = true;
-
-                // Remove the completed review from the page
-                //reviewItem.remove();
-            });
+                </div>  `;
         }
     });
 });
 
-if (hasReviewsToday === false) { // No reviews found yet
-    const message = document.createElement("p");
+const completeButtons = document.querySelectorAll(".complete-button");
 
-    message.textContent = "All is done! There aren't any reviews today 🎉";
 
-    todayreviewslist.appendChild(message);
+completeButtons.forEach(function (button) {
+
+    button.addEventListener("click", function () {
+
+        const reviewItem = button.parentElement;
+
+        const subjectName = reviewItem.querySelector("h2").textContent;
+
+        const reviewNumber = reviewItem.querySelector("p").textContent;
+
+        const subject = subjects.find(function (subject) {
+
+            return subject.subjectname === subjectName;
+
+        });
+
+        const index = Number(reviewNumber.replace("Review #", "")) - 1;
+       
+        subject.reviews[index].completed = true; // Mark review as completed
+
+        localStorage.setItem("subjects", JSON.stringify(subjects));  // Save updated data
+
+        button.textContent = "Reviewed ✓";
+
+        button.disabled = true;
+
+    });
+});
+
+
+if (hasReviewsToday === false) { // If there are no reviews today
+
+    todayreviewslist.innerHTML = ` <p>All is done! There aren't any reviews today </p> `;
+
 }
