@@ -1,5 +1,5 @@
 //info.html part
-let form = document.querySelector("#form");
+const form = document.querySelector("#form");
 if (form) {
     form.addEventListener("submit", function (e) {
         e.preventDefault();
@@ -31,15 +31,8 @@ if (form) {
         localStorage.setItem("userinfo", JSON.stringify(user));
         // localStorage : store string only
         // Convert the user object to a string and save it in localStorage
-        /*User Object
-         ↓
-        JSON.stringify() -----> يحول الـ object --> إلى string.
-         ↓
-        String
-         ↓
-        localStorage
-    */
-        window.location.href = "dashboard.html"; //    window.location.href : used to move between web pages
+    
+        window.location.href = "dashboard.html"; //    window.location.href : used to move between web pages by button
 
 
     });
@@ -50,10 +43,6 @@ const hi = document.querySelector("#hi");
 if (hi) {
     hi.textContent = "Hello, " + username.name;
 }
-/*
-1. In `dashboard.html` → The `#hi` element exists, so the user's name will be displayed. ✅
-2. In `info.html` → The `#hi` element does not exist, so JavaScript will skip that code without causing an error. ✅
- */
 //====================================================streak=================
 const subjects = JSON.parse(localStorage.getItem("subjects")) || [];
 
@@ -88,18 +77,21 @@ subjects.forEach(function (subject) {
 });
 
 
-const monthlyReviewsElement = document.querySelector("#monthlyReviews");// to display something at html page,this is the way
+const monthlyReviewss = document.querySelector("#monthlyReviews");// to display something at html page,this is the way
 
-if (monthlyReviewsElement) {
-    monthlyReviewsElement.textContent = monthlyReviews;
+if (monthlyReviewss) {
+    monthlyReviewss.textContent = monthlyReviews;
 }
 
 
-const completionRateElement = document.querySelector("#completionRate");
+const completionRatee = document.querySelector("#completionRate");
 
-const completionRate = totalReviews === 0 ? 0 : Math.round((completedReviews / totalReviews) * 100);
-//condition ? valueIfTrue : valueIfFalse
+let completionRate = 0;
 
-if (completionRateElement) {
-    completionRateElement.textContent = completionRate + "%";
+if (totalReviews > 0) {
+    completionRate = Math.round((completedReviews / totalReviews) * 100);
+}
+
+if (completionRatee) {
+    completionRatee.textContent = completionRate + "%";
 }
