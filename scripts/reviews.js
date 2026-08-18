@@ -10,36 +10,36 @@ function formatDate(date) {
     });
 }
 
-subjects.forEach(function (subject) {  //انا مش فاهمه الداله دى نهائى بس دى وظيفتها انها تعرض الجدول كامل
+subjects.forEach(function (subject) {
 
-    // Create a section for each subject
-    const subjectSection = document.createElement("div");
-
-    // Create subject name
-    const subjectName = document.createElement("h2");
-    subjectName.textContent = subject.subjectname;
-
-    subjectSection.appendChild(subjectName);
-
-
-    // Create reviews list
-    const reviewsList = document.createElement("div");
-
+    let reviewsHTML = "";
 
     subject.reviews.forEach(function (review, index) {
 
-        const reviewItem = document.createElement("p");
+        reviewsHTML += `
+            <p>
+                Review ${index + 1} — ${formatDate(review.date)}
+            </p>
+        `;
 
-        reviewItem.textContent =
-            `Review ${index + 1} — ${formatDate(review.date)}`;
-
-        reviewsList.appendChild(reviewItem);
     });
 
 
-    subjectSection.appendChild(reviewsList);
+    reviewslist.innerHTML += `
 
-    reviewslist.appendChild(subjectSection);
+        <div class="subjectSection">
+
+            <h2>${subject.subjectname}</h2>
+
+            <div class="reviewsList">
+
+                ${reviewsHTML}
+
+            </div>
+
+        </div>
+
+    `;
 
 });
 //move from reviews schedule page to todayreviews page
