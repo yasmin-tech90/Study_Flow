@@ -3,27 +3,13 @@ const subjectsList = document.querySelector("#subjectsList"); // represent the s
 let button = document.querySelector("#btn2");
 let form = document.querySelector("#subjectform");
 
-
-
-
 // Show / Hide forms
 if (button && form) {
     button.addEventListener("click", function () {
         form.style.display = "block";
     });
 }
-/*if (button && form) {
 
-    button.addEventListener("click", function () {
-
-        if (form.style.display === "none") {
-            form.style.display = "block";
-        } else {
-            form.style.display = "none";
-        }
-
-    });
-}*/
 // add subject
 if (form) {
     form.addEventListener("submit", function (e) {
@@ -35,7 +21,6 @@ if (form) {
         const subname = document.querySelector("#subname").value;
         const startdate = document.querySelector("#startdate").value;
         const examdate = document.querySelector("#examdate").value;
-
 
 
         const reviews = generateSchedule(startdate, examdate);//call reviews to store it at subject object
