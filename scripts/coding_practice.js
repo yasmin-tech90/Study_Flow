@@ -1,23 +1,8 @@
-//get elements from html file
 const addProblemBtn = document.querySelector("#btn2");
 const codingform = document.querySelector("#coding");
 const problemsList = document.querySelector("#problemsList");
 const searchInput = document.querySelector("#searchInput");
 
-//add & show form
-if (addProblemBtn && codingform) {
-
-    addProblemBtn.addEventListener("click", function () {
-
-        if (codingform.style.display === "none") {
-            codingform.style.display = "block";
-        } else {
-            codingform.style.display = "none";
-        }
-
-    });
-}
-//save problem
 if (codingform) {
     codingform.addEventListener("submit", function (e) {
         e.preventDefault();
@@ -40,14 +25,11 @@ if (codingform) {
             difficulty: difficulty
 
         };
-        // Get old broblems
         const problems = JSON.parse(localStorage.getItem("problems")) || [];
 
-        // Add new problem
+
         problems.push(problem);
 
-
-        // Save all problems
 
         localStorage.setItem("problems", JSON.stringify(problems));
 
@@ -59,8 +41,8 @@ if (codingform) {
 
         codingform.style.display = "none";
 
-        // Refresh displayed problems
-        displayProblems(problems);
+
+        displayProblems(problems); // Refresh displayed problems
     });
 }
 //<!--======================Display Problems=============================-->
@@ -74,7 +56,7 @@ function displayProblems(problems) {
 
     problems.forEach(function (problem) {
 
-        const problemItem = document.createElement("div");
+        const problemItem = document.createElement("div"); //Create a new HTML element using JavaScript
 
         problemItem.innerHTML = `
             <h3>${problem.problemname}</h3>
@@ -88,11 +70,11 @@ function displayProblems(problems) {
             <p>Date Solved: ${problem.solvingdate}</p>
         `;
 
-        problemsList.appendChild(problemItem);
+        problemsList.appendChild(problemItem);//Put a created element inside another element
 
     });
-    // count the number of problems and display it
-    const solvedCount = document.querySelector("#solvedCount");
+
+    const solvedCount = document.querySelector("#solvedCount");    // count the number of problems and display it
 
     if (solvedCount) {
         solvedCount.textContent = problems.length;
@@ -120,7 +102,7 @@ if (searchInput) { // id from html
 
     });
 }
-// load problems
-const savedProblems = JSON.parse(localStorage.getItem("problems")) || [];
+
+const savedProblems = JSON.parse(localStorage.getItem("problems")) || [];// load problems
 
 displayProblems(savedProblems);
