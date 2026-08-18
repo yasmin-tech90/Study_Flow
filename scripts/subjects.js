@@ -3,17 +3,15 @@ const subjectsList = document.querySelector("#subjectsList"); // represent the s
 let button = document.querySelector("#btn2");
 let form = document.querySelector("#subjectform");
 
-// Show / Hide forms
 if (button && form) {
     button.addEventListener("click", function () {
         form.style.display = "block";
     });
 }
 
-// add subject
-if (form) {
+if (form) { // add subject
     form.addEventListener("submit", function (e) {
-        e.preventDefault();
+        e.preventDefault();//prevent the browser from default reloading the page
 
         console.log("Form submitted without reload");
 
@@ -30,97 +28,65 @@ if (form) {
             examdate: examdate,
             reviews: reviews
         };
-        // Get old subjects
-        let subjects = JSON.parse(localStorage.getItem("subjects")) || [];
+        let subjects = JSON.parse(localStorage.getItem("subjects")) || []; // Get old subjects
 
+        subjects.push(subject); // Add neww subject
 
-        // Add neww subject
-        subjects.push(subject);
+        localStorage.setItem("subjects", JSON.stringify(subjects)); // Save all subjects
 
-
-        // Save all subjects
-        localStorage.setItem("subjects", JSON.stringify(subjects));
         console.log("All subjects:", subjects);
         console.log("From localStorage:", localStorage.getItem("subjects"));
-
-        console.log(subject);
-
-
-        // Clear the form
-        form.reset();
+        form.reset(); // Clear the form
 
     });
 }
 //display the subjects
 function displaySubjects() {
 
-    const subjects =
-        JSON.parse(localStorage.getItem("subjects")) || [];
+    const subjects = JSON.parse(localStorage.getItem("subjects")) || [];
 
     subjectsList.innerHTML = "";
 
     subjects.forEach(function (subject, index) {
 
-        const subjectItem =
-            document.createElement("div");
+        subjectsList.innerHTML += `
 
-        const subjectName =
-            document.createElement("h3");
+            <div class="subjectItem">
 
-        subjectName.textContent =
-            subject.subjectname;
+                <h3>${subject.subjectname}</h3>
 
+                <p>
+                    Start Date: ${subject.startdate}
+                </p>
 
-        const startDate =
-            document.createElement("p");
+                <p>
+                    Exam Date: ${subject.examdate}
+                </p>
 
-        startDate.textContent =
-            "Start Date: " + subject.startdate;
-
-
-        const examDate =
-            document.createElement("p");
-
-        examDate.textContent =
-            "Exam Date: " + subject.examdate;
+                <button class="deleteButton"  data-index="${index}"> Delete </button>
+             </div> `;
+    });
 
 
-        const deleteButton =
-            document.createElement("button");
-
-        deleteButton.textContent =
-            "Delete";
+    const deleteButtons = document.querySelectorAll(".deleteButton");
 
 
-        subjectItem.appendChild(subjectName);
+    deleteButtons.forEach(function (button) {
 
-        subjectItem.appendChild(startDate);
+        button.addEventListener("click", function () {
 
-        subjectItem.appendChild(examDate);
+            const index = button.dataset.index;
 
-        subjectItem.appendChild(deleteButton);
-
-        subjectsList.appendChild(subjectItem);
-
-
-        // Delete subject
-        deleteButton.addEventListener("click", function () {
-
-            const confirmDelete =
-                confirm(
-                    `Are you sure you want to delete ${subject.subjectname}?`
-                );
+            const confirmDelete = confirm( `Are you sure you want to delete ${subjects[index].subjectname}?` );
 
             if (confirmDelete) {
 
                 subjects.splice(index, 1);
 
-                localStorage.setItem(
-                    "subjects",
-                    JSON.stringify(subjects)
-                );
-
+                localStorage.setItem( "subjects",  JSON.stringify(subjects) );
+                
                 displaySubjects();
+
             }
 
         });
