@@ -3,6 +3,19 @@ const codingform = document.querySelector("#coding");
 const problemsList = document.querySelector("#problemsList");
 const searchInput = document.querySelector("#searchInput");
 
+let isProblemFormVisible = false;
+if (addProblemBtn && codingform) {
+
+    addProblemBtn.addEventListener("click", function () {
+
+        isProblemFormVisible = !isProblemFormVisible;
+
+        codingform.style.display =
+            isProblemFormVisible ? "block" : "none";
+
+    });
+}
+
 if (codingform) {
     codingform.addEventListener("submit", function (e) {
         e.preventDefault();
@@ -106,3 +119,7 @@ if (searchInput) { // id from html
 const savedProblems = JSON.parse(localStorage.getItem("problems")) || [];// load problems
 
 displayProblems(savedProblems);
+
+
+
+
